@@ -1,0 +1,51 @@
+
+.holder{
+  display:grid;
+}
+
+.container{
+    margin-right: 5%;
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: minmax(100px,50%) minmax(100px,10%)  minmax(100px,30%)  minmax(100px,10%) ;
+    grid-auto-rows: repeat(auto,minmax(100px,auto-fit)) ;
+    
+}
+
+.item2{
+    border: 1px;
+    border-style: solid;
+            border-color:yellow ;
+
+        padding: 5px;
+
+
+}
+.item3-container{
+    border-color: orange ;
+    border: 1px;
+    border-style: solid;
+    padding: 5px;
+
+}
+.item4-container{
+        grid-column: 4/5 ;
+        border-color: purple ;
+    border: 1px;
+    border-style: solid;
+        padding: 5px;
+
+
+} 
+
+
+.subitem1-container {
+    margin:10px;
+    border: 1px;
+    border-style: solid;
+            border-color:teal ;
+
+        padding: 5px;
+
+
+}
