@@ -1,14 +1,17 @@
 import { Component, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { toogleShow } from "../redux/actions"
+import { getStateFromApi, getTask, toogleShow } from "../redux/actions"
 import TodoSubList from './todosublist'
 import "../css/progress.css"
 
 
 
 const ShowListItem = () => {
-    const selector = useSelector(state => state)
     const dispatch = useDispatch()
+    let apidata = dispatch(getTask())
+    console.log("apidata", apidata)
+    const selector = useSelector(state => state)
+    console.log("selector", selector)
     if (Object.keys(selector).length >= 1) {
         console.log("inside showItem", selector)
         console.log("using selector len", Object.keys(selector))

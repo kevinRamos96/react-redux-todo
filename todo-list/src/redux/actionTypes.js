@@ -4,3 +4,6 @@ export const COMPLETED = "COMPLETED";
 export const SHOW = "SHOW"
 export const STEP_COMPLETED = "STEP_COMPLETED"
 export const STEP_UNDO = "STEP_UNDO"
+export const POST_TASK = "POST_TASK"
+export const POST_TASK_SUCC = "POST_TASK_SUCC"
+export const ADD_STATE = "ADD_STATE"

@@ -1,4 +1,5 @@
-import { ADD_TODO, SHOW, ADD_TODO_SLAVE, STEP_COMPLETED, COMPLETED, STEP_UNDO } from "../actionTypes"
+import axios from "axios";
+import { ADD_TODO, SHOW, ADD_TODO_SLAVE, STEP_COMPLETED, COMPLETED, STEP_UNDO, POST_TASK, ADD_STATE } from "../actionTypes"
 
 const initialState = {
 
@@ -16,18 +17,22 @@ const reducer = (state = initialState, action) => {
                     task: task,
                     date: date
                 }
-
             }
         }
 
-        case ADD_TODO_SLAVE: {
-            const { task, steps, date } = action.payload;
+        case ADD_STATE: {
+            const { task, steps, dateB } = action.payload;
+            // const task = action.payload.task
+            // const steps = action.payload.steps
+            // const dateB = action.payload.dateB
+
+            console.log("action.payload", task, steps, dateB, action.payload)
             return {
                 ...state,
                 [task]: {
                     ...action.payload,
                     task: task,
-                    date: date,
+                    dateB: dateB,
                     steps: steps
                 }
             }
@@ -76,8 +81,12 @@ const reducer = (state = initialState, action) => {
             }
         }
 
+
         default: return state
     }
+
 }
+
+
 
 export default reducer

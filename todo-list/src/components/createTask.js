@@ -1,6 +1,7 @@
 import { Component, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { addTodo, addTodoSlave } from "../redux/actions"
+import { addTodo, addTodoSlave, postTaskSteps } from "../redux/actions"
+import { postTask } from "../redux/actions";
 
 const CreateTask = () => {
     const [task, setTask] = useState(null)
@@ -31,8 +32,8 @@ const CreateTask = () => {
             setSubList({
                 [subT]: {
                     step: subT,
-                    dateB: taskDate,
-                    completed: 0
+                    dateBS: taskDate,
+                    completedS: 0
                 }
             })
             console.log("if addSubTask", subList)
@@ -47,8 +48,8 @@ const CreateTask = () => {
             setSubList({
                 ...subList, [subT]: {
                     step: subT,
-                    dateB: taskDate,
-                    completed: 0
+                    dateBS: taskDate,
+                    completedS: 0
                 }
             })
             console.log("subList", subList)
@@ -60,9 +61,15 @@ const CreateTask = () => {
 
 
     }
+
+    const dispatchAddTodo = () => {
+        dispatch(addTodo(task, taskDate))
+        dispatch(postTask(task, taskDate))
+    }
     //Set state for task and subList to null
     const dispatchAddTodoSlave = () => {
         dispatch(addTodoSlave(task, subList, taskDate))
+        dispatch(postTaskSteps(task, taskDate, subList))
         setTask("");
         setSubList("");
         setButState(false)
@@ -90,7 +97,7 @@ const CreateTask = () => {
     let container = (<div>
         {!butState ? <div>
             <input value={task} onChange={(e) => formTask(e)}></input>
-            <button type='submit' onClick={() => dispatch(addTodo(task, taskDate))}>Add Task</button>
+            <button type='submit' onClick={() => dispatchAddTodo()}>Add Task</button>
             <button type="submit" onClick={() => butSet()}>CreateSubTask</button>
         </div>
             :
