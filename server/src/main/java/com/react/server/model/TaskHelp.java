@@ -17,19 +17,11 @@ import lombok.Setter;
 @Setter
 @Getter
 @ConfigurationProperties("steps")
-public class TaskHelp {
+public class TaskHelp extends Help {
     Map<String, Help> steps = new HashMap<>();
 
     public Map<String, Help> getSteps() {
         return steps;
     }
 
-    static class Help {
-        @JsonProperty("step")
-        String step;
-        @JsonProperty("dateBS")
-        String dateBS;
-        @JsonProperty("copmletedS")
-        int completedS;
-    }
 }

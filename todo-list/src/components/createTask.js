@@ -1,6 +1,6 @@
 import { Component, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { addTodo, addTodoSlave, postTaskSteps } from "../redux/actions"
+import { addTodo, addTodoSlave, getTask, postTaskSteps } from "../redux/actions"
 import { postTask } from "../redux/actions";
 
 const CreateTask = () => {
@@ -9,6 +9,8 @@ const CreateTask = () => {
     const [subList, setSubList] = useState("")
     const [butState, setButState] = useState(false)
     const dispatch = useDispatch()
+    const testState = useSelector(state => state)
+    console.log("testState", testState)
     const date = new Date()
     const taskDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
 
@@ -65,6 +67,7 @@ const CreateTask = () => {
     const dispatchAddTodo = () => {
         dispatch(addTodo(task, taskDate))
         dispatch(postTask(task, taskDate))
+        dispatch(getTask())
     }
     //Set state for task and subList to null
     const dispatchAddTodoSlave = () => {

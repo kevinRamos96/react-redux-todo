@@ -60,7 +60,7 @@ const reducer = (state = initialState, action) => {
                     ...action.payload,
                     completed: completed,
                     steps: {
-                        ...steps, [step]: { ...action.stepFinder, completed: 1 },
+                        ...steps, [step]: { ...action.stepFinder, completedS: 1 },
                     }
                 }
             }
@@ -76,7 +76,7 @@ const reducer = (state = initialState, action) => {
                 [task]: {
                     ...action.payload,
                     completed: completed,
-                    steps: { ...steps, [step]: { ...action.stepFinder, completed: 0 } }
+                    steps: { ...steps, [step]: { ...action.stepFinder, completedS: 0 } }
                 }
             }
         }

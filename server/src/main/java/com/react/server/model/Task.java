@@ -8,8 +8,6 @@ import com.fasterxml.jackson.databind.util.JSONPObject;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.scheduling.config.Task;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +23,7 @@ public class Task extends TaskHelp {
     String task;
     String dateB;
     String dateE;
-    Integer completed;
+    float completed;
     boolean show;
 
     // Map<String, Object> steps;

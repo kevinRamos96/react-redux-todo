@@ -12,7 +12,7 @@ const taskCompletion = (parent, child) => {
          * cannot exceeed the length of the number steps therefore we set the counter to be 
          * less than the number of steps if not on the last render it will make the widht >100%
          */
-        if (child[input].completed > 0 && counter < Object.keys(child).length) {
+        if (child[input].completedS > 0 && counter < Object.keys(child).length) {
             counter = (counter + 1)
             console.log("result for counter", counter)
 

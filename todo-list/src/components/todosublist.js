@@ -12,7 +12,6 @@ const TodoSubList = ({ propsParent, props }) => {
     const dispatch = useDispatch()
     console.log("props", props)
 
-
     if (Object.keys(props).length >= 1) {
         let container =
             Object.keys(props).map(input =>
@@ -24,15 +23,16 @@ const TodoSubList = ({ propsParent, props }) => {
                         {props[input].step}
                     </div>
                     <div className="subitem1-container ">
-                        {props[input].dateB}
+                        {props[input].dateBS}
                     </div>
                     <div className="subitem1-container ">
-                        <div className="filler" style={{ width: `${props[input].completed * 100}%` }}>
+                        <div className="filler" style={{ width: `${props[input].completedS * 100}%` }}>
+                            {console.log("completedS", props[input].completedS)}
                         </div>
                     </div>
 
                     <div className="subitem1-container ">
-                        {props[input].completed ?
+                        {props[input].completedS ?
                             <button type="submit" onClick={() => dispatch(stepUndo(propsParent, props[input], taskUndo(propsParent, props)))}>Undo</button>
 
                             :
