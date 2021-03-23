@@ -28,7 +28,11 @@ const ShowListItem = () => {
                     {console.log("input", selector[input])}
 
                     <div className="container">
-                        <div className="item2">{selector[input].task}<button type='submit' onClick={() => (toogleUpdate(selector[input]))}  >Clickhere</button></div>
+                        <div className="item2">{selector[input].task}
+                            <div className="button-class">
+                                <button type='submit' onClick={() => (toogleUpdate(selector[input]))}  >ShowSteps</button>
+                            </div>
+                        </div>
                         <div className="item2">{selector[input].dateB}</div>
                         <div className="item2">
                             <div className="filler" style={{ width: `${selector[input].completed * 100}%` }}>
