@@ -9,14 +9,20 @@ import GetDataFromAPI from "./getDataAPI"
 import "../App.css"
 
 
+
 const TodoList = (props) => {
     //set up state from app.js
     let content = (
         <div>
             <ul>
-                <div>
-                    <CreateTask />
-                    <ShowListItem />
+                <div className="main">
+                    <div className="main-menu">MENU</div>
+                    <div className="main-content">
+                        <CreateTask />
+                        <ShowListItem />
+
+                    </div>
+
                 </div>
 
 

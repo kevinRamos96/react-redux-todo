@@ -12,7 +12,7 @@ const CreateTask = () => {
     const testState = useSelector(state => state)
     console.log("testState", testState)
     const date = new Date()
-    const taskDate = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear()
+    const taskDate = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()
 
     const formTask = (e) => {
         console.log("target", e.target.value)

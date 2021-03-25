@@ -28,7 +28,7 @@ export const postTask = (content, date) => (dispatch, getState) => {
         },
     }
     console.log("thunk to post", tasks)
-    axios.post("http://localhost:8080/api/", tasks)
+    axios.post("http://192.168.22.27:8080/api/", tasks)
         .then(res => {
             console.log("res", tasks)
             console.log("resdata post", res.data)
@@ -55,7 +55,7 @@ const createMap = (input) => (dispatch) => {
 }
 export const getTask = () => async (dispatch, getState) => {
     console.log("insideapi getTASK")
-    await axios.get("http://localhost:8080/api/")
+    await axios.get("http://192.168.22.27:8080/api/")
         .then(res => {
             dispatch(createMap(res.data))
 
@@ -76,7 +76,7 @@ export const postTaskSteps = (content, date, contentSteps) => (dispatch, getStat
         steps: contentSteps
     }
     console.log("thunk to post", tasks)
-    axios.post("http://localhost:8080/api/", tasks)
+    axios.post("http://192.168.22.27:8080/api/", tasks)
         .then(res => {
             console.log("res", res)
             console.log("resdata", res.data)
@@ -116,7 +116,7 @@ export const toogleShowAPI = (item) => (dispatch, getState) => {
         return object
     }, {})
     console.log("task to PUT", task)
-    axios.put("http://localhost:8080/api/" + id, task)
+    axios.put("http://192.168.22.27:8080/api/" + id, task)
         .then(res => console.log("res from PUT", res))
 }
 
@@ -130,7 +130,7 @@ export const stepCompleted = (item, itemStep, itemCompleted) => (dispatch, getSt
 
     const state = itemStep.step;
     console.log("STEP Completed", itemStep)
-    axios.put("http://localhost:8080/api/" + item.task + "/" + state, item)
+    axios.put("http://192.168.22.27:8080/api/" + item.task + "/" + state, item)
         .then(res => {
             console.log("response for step undo", res.status)
             dispatch({
@@ -146,7 +146,7 @@ export const stepUndo = (item, itemStep, itemCompleted) => (dispatch, getState) 
     const state = itemStep.step;
     console.log("STEP UNDO", itemStep.step)
 
-    axios.put("http://localhost:8080/api/" + item.task + "/" + state, item)
+    axios.put("http://192.168.22.27:8080/api/" + item.task + "/" + state, item)
         .then(res => {
             console.log("response for step undo", res.status)
             dispatch({

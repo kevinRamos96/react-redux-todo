@@ -1,14 +1,38 @@
 
+
+*, html {
+    margin:0;
+    padding:0;  
+}
 .holder{
   display:grid;
   gap: 5px;
 }
 
+.main{
+    display: grid;
+    grid-template-columns: 10% 90%;
+    gap: 1rem;
+
+
+    
+}
+
+.main-menu{
+    height: 100vh;
+    grid-column: 1/2;
+    min-height: 100%;
+    background-color: black;
+
+}
+.main-content{
+    grid-column: 2/3;
+}
 .container{
     margin-right: 5%;
     display: grid;
     grid-auto-flow: row;
-    grid-template-columns: minmax(100px,50%) minmax(100px,10%)  minmax(100px,30%)  minmax(100px,10%) ;
+    grid-template-columns: minmax(40%,40%) minmax(20%,20%)  minmax(20%,30%)  minmax(20%,10%) ;
     grid-auto-rows: repeat(auto,minmax(100px,auto-fit)) ;
     gap: 1px;
 }
