@@ -11,7 +11,7 @@
 
 .main{
     display: grid;
-    grid-template-columns: 10% 90%;
+    grid-template-columns: minmax(8rem, 10%) minmax(30rem, 90%);
     gap: 1rem;
 
 
@@ -23,10 +23,63 @@
     grid-column: 1/2;
     min-height: 100%;
     background-color: black;
+}
+
+.menu-boxes{
+    display: flex;
+    position: relative;
+    align-items: center;
+    flex-direction: column;
+    height: 90%;
+}
+.btn-box{
+height: 10%;
+width: 90%;
+border: solid white 2px;
+margin: 0.5em;
+
 
 }
+div.menu-boxes button{
+background-color:transparent;
+color: white;
+height: 100%;
+width: 100%;
+border: none;
+}
+.footer{
+    display: flex;
+    position: relative;
+    align-content: center;
+    justify-content: center;
+    position: relative;
+    height: 10%;
+    width: 100%;
+    
+}
+.footer-box{
+    width: 100%;
+    border: solid white 2px;
+    margin: 0.5em;
+}
+div.footer-box button{
+font-size: medium;
+background-color: transparent;
+height: 100%;
+width: 100%;
+}
+
 .main-content{
     grid-column: 2/3;
+}
+
+
+div.footer button{
+background-color:transparent;
+height: 100%;
+color: white;
+width: 100%;
+border: none;
 }
 .container{
     margin-right: 5%;
