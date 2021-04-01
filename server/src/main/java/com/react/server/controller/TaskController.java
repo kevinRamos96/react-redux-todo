@@ -1,6 +1,7 @@
 package com.react.server.controller;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
@@ -30,6 +30,23 @@ public class TaskController {
     @GetMapping("/")
     public List<Task> getTask() {
         return taskRespository.findAll();
+    }
+
+    @GetMapping("/getCategories")
+    public List<String> getCategories() {
+        List<String> result = new ArrayList<String>();
+        List<Task> filter = taskRespository.findCategoryName();
+        for (Task list : filter) {
+            String temp = list.getCategory();
+            if (result.isEmpty()) {
+                result.add(temp);
+
+            } else if (!result.contains(temp)) {
+                result.add(temp);
+            } else {
+                return result;}
+        }
+        return result;
     }
 
     @PostMapping("/")

@@ -1,7 +1,8 @@
 import './App.css';
-import React, { Component, useState } from "react"
+import React, { Component, useEffect, useState } from "react"
 import TodoList from './components/todolist'
 import GetDataFromAPI from './components/getDataAPI'
+import axios from 'axios'
 const App = () => {
 
   const todo =
@@ -44,13 +45,27 @@ const App = () => {
   //Initiate redux state if there is data saved omn DB with GETDataFromAPI() needs to only be run once at the beginning
   //of the application if it is run other than at the beginning it casuse the app to create an infinite loop of API calls
   //due to constantly re rendering
-  const data = GetDataFromAPI() //initiate redux state
-  const [state, setState] = useState(todo)
-  console.log("state", state)
-  let container = TodoList(state)
-  console.log("debug", container)
+  const fetch = GetDataFromAPI() //initiate redux state
+  const [isLoading, setIsLoading] = useState(true)
+  const [data, setData] = useState("")
+  useEffect(() => {
+    axios.get("http://192.168.22.27:8080/api/getCategories").
+      then(res => {
+        console.log("res.status", res.status)
+        console.log(res.data);
+        setData(res.data)
+        setIsLoading(false)
+      })
 
-  return container;
+  }, [])
+
+  if (isLoading) {
+    return (<div>LOADING</div>)
+  }
+
+  return (<TodoList
+    data={data}
+  ></TodoList>)
 
 }
 

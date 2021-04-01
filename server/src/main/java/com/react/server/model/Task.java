@@ -21,6 +21,7 @@ import lombok.Setter;
 public class Task extends TaskHelp {
     @Id
     String task;
+    String category;
     String dateB;
     String dateE;
     float completed;

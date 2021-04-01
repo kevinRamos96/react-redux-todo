@@ -2,18 +2,24 @@ import { Component, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { addTodo, addTodoSlave, getTask, postTaskSteps } from "../redux/actions"
 import { postTask } from "../redux/actions";
+import '../css/modal.css'
 
-const CreateTask = () => {
+const CreateTask = (props) => {
     const [task, setTask] = useState(null)
     const [subT, setSubT] = useState(null)
     const [subList, setSubList] = useState("")
     const [butState, setButState] = useState(false)
+    const [categoryData, setCategoryData] = useState("")
     const dispatch = useDispatch()
     const testState = useSelector(state => state)
     console.log("testState", testState)
     const date = new Date()
     const taskDate = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear()
 
+    const formCategory = (e) => {
+        console.log("category", categoryData);
+        setCategoryData(e.target.value);
+    }
     const formTask = (e) => {
         console.log("target", e.target.value)
         setTask(e.target.value)
@@ -71,11 +77,12 @@ const CreateTask = () => {
     }
     //Set state for task and subList to null
     const dispatchAddTodoSlave = () => {
-        dispatch(addTodoSlave(task, subList, taskDate))
-        dispatch(postTaskSteps(task, taskDate, subList))
+        dispatch(addTodoSlave(categoryData, task, subList, taskDate))
+        dispatch(postTaskSteps(categoryData, task, taskDate, subList))
         setTask("");
         setSubList("");
         setButState(false)
+        setCategoryData("");
     }
     const butSet = () => {
         setButState(!butState)
@@ -97,39 +104,58 @@ const CreateTask = () => {
         console.log("subListFromDelete", subList)
     }
 
-    let container = (<div>
-        {!butState ? <div>
-            <input value={task} onChange={(e) => formTask(e)}></input>
-            <button type='submit' onClick={() => dispatchAddTodo()}>Add Task</button>
-            <button type="submit" onClick={() => butSet()}>CreateSubTask</button>
-        </div>
-            :
-            <div>
+    let container = (<div className="box">
+        <div className="close-icon" onClick={props.closeModal}>X</div>
+        {!butState ? <>
+            <div className="boxTitle">
                 <input value={task} onChange={(e) => formTask(e)}></input>
-                <button type='submit' onClick={() => dispatchAddTodoSlave()}>Add Task</button>
-                <button type="submit" onClick={() => butSet()}>DeleteAllSubTask</button>
-                {subList === null ?
-                    <div>
-                        {console.log("inside true sublist")}
-                        <input value={subT} onChange={(e) => formSubt(e)}></input>
-                        <button type="submit" onClick={() => addSubTask()}>submit step</button>
-                    </div>
-                    :
-                    <div>
-                        {Object.keys(subList).map(input => <div>
-                            <input readOnly value={subList[input].step}></input>
-                            <button type="submit" onClick={() => deleteSubTask(subList[input])}>Delete Step</button>
-                        </div>)}
-                        <input value={subT} onChange={(e) => formSubt(e)}></input>
-                        <button type="submit" onClick={() => addSubTask()}>submit step</button>
-                    </div>
-                }
-            </div>}
+            </div>
+            <div className="buttonBox">
+                <button type='submit' onClick={() => dispatchAddTodo()}>Add Task</button>
+                <button type="submit" onClick={() => butSet()}>CreateSubTask</button>
+            </div>
+
+        </>
+            :
+            <>
+                <div className="boxTitle">
+                    <input value={task} onChange={(e) => formTask(e)}></input>
+                    <input value={categoryData} onChange={(e) => formCategory(e)}></input>
+
+                    {subList === null ?
+                        <>
+                            {console.log("inside true sublist")}
+                            <div className="box-Title-inside">
+                                <input value={subT} onChange={(e) => formSubt(e)}></input>
+                                <button type="submit" onClick={() => addSubTask()}>submit step</button>
+                            </div>
+
+                        </>
+                        :
+                        <>
+                            <>
+                                {Object.keys(subList).map(input => <div className="box-Title-inside">
+                                    <input readOnly value={subList[input].step}></input>
+                                    <button type="submit" onClick={() => deleteSubTask(subList[input])}>Delete Step</button>
+                                </div>)}
+                                <div className="box-Title-inside">
+                                    <input value={subT} onChange={(e) => formSubt(e)}></input>
+                                    <button type="submit" onClick={() => addSubTask()}>submit step</button>
+                                </div>
+                            </>
+                        </>
+                    }
+                </div>
+                <div className="buttonBox">
+                    <button type='submit' onClick={() => dispatchAddTodoSlave()}>Add Task</button>
+                    <button type="submit" onClick={() => butSet()}>DeleteAllSubTask</button>
+                </div>
+            </>}
 
 
         <br></br>
 
-    </div >)
+    </div>)
 
     return container
 

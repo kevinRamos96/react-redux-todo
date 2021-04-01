@@ -6,11 +6,14 @@ import "../css/progress.css"
 
 
 
-const ShowListItem = () => {
+const ShowListItem = (props) => {
     const dispatch = useDispatch()
 
-    const selector = useSelector(state => state)
-    console.log("selector", selector)
+    const tempState = useSelector(state => state)
+    const selector = tempState[props.category]
+    console.log("props category", props.category)
+    console.log("selector state", selector)
+    console.log("props category array", selector[props.category])
     //update state show on database
     const toogleUpdate = (input) => {
         dispatch(toogleShow(input))

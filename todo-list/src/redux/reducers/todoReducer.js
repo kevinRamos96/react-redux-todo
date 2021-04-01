@@ -21,7 +21,7 @@ const reducer = (state = initialState, action) => {
         }
 
         case ADD_STATE: {
-            const { task, steps, dateB } = action.payload;
+            const { task, category, steps, dateB, } = action.payload;
             // const task = action.payload.task
             // const steps = action.payload.steps
             // const dateB = action.payload.dateB
@@ -29,55 +29,73 @@ const reducer = (state = initialState, action) => {
             console.log("action.payload", task, steps, dateB, action.payload)
             return {
                 ...state,
-                [task]: {
-                    ...action.payload,
-                    task: task,
-                    dateB: dateB,
-                    steps: steps
+                [category]: {
+                    ...state[category],
+                    [task]: {
+                        ...action.payload,
+                        task: task,
+                        category: category,
+                        dateB: dateB,
+                        steps: steps
+                    }
                 }
+
             }
         }
 
         case SHOW: {
-            const { task, show } = action.payload
+            const { task, show, category } = action.payload
+            console.log("inside SHOW category", category)
             return {
                 ...state,
-                [task]: {
-                    ...action.payload,
-                    show: !show
+                [category]: {
+                    ...state[category],
+                    [task]: {
+                        ...action.payload,
+                        show: !show
+                    }
                 }
+
 
             }
         }
 
         case STEP_COMPLETED: {
-            const { task, steps } = action.payload
+            const { task, steps, category } = action.payload
             const completed = action.newCompleted
             const { step } = action.stepFinder
             return {
                 ...state,
-                [task]: {
-                    ...action.payload,
-                    completed: completed,
-                    steps: {
-                        ...steps, [step]: { ...action.stepFinder, completedS: 1 },
+                [category]: {
+                    ...state[category],
+                    [task]: {
+                        ...action.payload,
+                        completed: completed,
+                        steps: {
+                            ...steps, [step]: { ...action.stepFinder, completedS: 1 },
+                        }
                     }
                 }
+
             }
         }
 
         case STEP_UNDO: {
-            const { task, steps } = action.payload
+            const { task, steps, category } = action.payload
             const completed = action.newCompleted
             const { step } = action.stepFinder
             console.log("insde reducer completed", completed)
             return {
                 ...state,
-                [task]: {
-                    ...action.payload,
-                    completed: completed,
-                    steps: { ...steps, [step]: { ...action.stepFinder, completedS: 0 } }
+                [category]: {
+                    ...state[category],
+                    [task]: {
+                        ...action.payload,
+                        completed: completed,
+                        steps: { ...steps, [step]: { ...action.stepFinder, completedS: 0 } }
+                    }
                 }
+
             }
         }
 
