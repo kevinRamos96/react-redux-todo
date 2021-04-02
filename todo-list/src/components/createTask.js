@@ -108,7 +108,8 @@ const CreateTask = (props) => {
         <div className="close-icon" onClick={props.closeModal}>X</div>
         {!butState ? <>
             <div className="boxTitle">
-                <input value={task} onChange={(e) => formTask(e)}></input>
+                <input value={task} placeholder="Input step Name" onChange={(e) => formTask(e)}></input>
+                <input value={categoryData} placeholder="Input Category Name" onChange={(e) => formCategory(e)}></input>
             </div>
             <div className="buttonBox">
                 <button type='submit' onClick={() => dispatchAddTodo()}>Add Task</button>
@@ -119,14 +120,14 @@ const CreateTask = (props) => {
             :
             <>
                 <div className="boxTitle">
-                    <input value={task} onChange={(e) => formTask(e)}></input>
-                    <input value={categoryData} onChange={(e) => formCategory(e)}></input>
+                    <input value={task} placeholder="Input step Name" onChange={(e) => formTask(e)}></input>
+                    <input value={categoryData} placeholder="Input Category Name" onChange={(e) => formCategory(e)}></input>
 
                     {subList === null ?
                         <>
                             {console.log("inside true sublist")}
                             <div className="box-Title-inside">
-                                <input value={subT} onChange={(e) => formSubt(e)}></input>
+                                <input value={subT} placeholder="Input step Name" onChange={(e) => formSubt(e)}></input>
                                 <button type="submit" onClick={() => addSubTask()}>submit step</button>
                             </div>
 
