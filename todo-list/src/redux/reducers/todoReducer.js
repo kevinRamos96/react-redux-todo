@@ -63,17 +63,34 @@ const reducer = (state = initialState, action) => {
         case STEP_COMPLETED: {
             const { task, steps, category } = action.payload
             const completed = action.newCompleted
-            const { step } = action.stepFinder
+            const newDate = action.newDate
+            if (action.stepFinder !== null) {
+                const { step } = action.stepFinder
+                return {
+                    ...state,
+                    [category]: {
+                        ...state[category],
+                        [task]: {
+                            ...action.payload,
+                            completed: completed,
+                            dateE: newDate,
+                            steps: {
+                                ...steps, [step]: { ...action.stepFinder, completedS: 1 },
+                            }
+                        }
+                    }
+
+                }
+            }
             return {
                 ...state,
                 [category]: {
                     ...state[category],
                     [task]: {
                         ...action.payload,
+                        dateE: newDate,
                         completed: completed,
-                        steps: {
-                            ...steps, [step]: { ...action.stepFinder, completedS: 1 },
-                        }
+
                     }
                 }
 
@@ -82,17 +99,36 @@ const reducer = (state = initialState, action) => {
 
         case STEP_UNDO: {
             const { task, steps, category } = action.payload
+            const newDate = action.newDate
             const completed = action.newCompleted
-            const { step } = action.stepFinder
             console.log("insde reducer completed", completed)
+            if (action.stepFinder !== null) {
+                const { step } = action.stepFinder
+                return {
+                    ...state,
+                    [category]: {
+                        ...state[category],
+                        [task]: {
+                            ...action.payload,
+                            completed: completed,
+                            dateE: newDate,
+                            steps: {
+                                ...steps, [step]: { ...action.stepFinder, completedS: 0 },
+                            }
+                        }
+                    }
+
+                }
+            }
             return {
                 ...state,
                 [category]: {
                     ...state[category],
                     [task]: {
                         ...action.payload,
+                        dateE: newDate,
                         completed: completed,
-                        steps: { ...steps, [step]: { ...action.stepFinder, completedS: 0 } }
+
                     }
                 }
 

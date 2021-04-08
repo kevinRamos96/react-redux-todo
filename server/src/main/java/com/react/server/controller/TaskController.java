@@ -1,7 +1,10 @@
 package com.react.server.controller;
 
 import java.util.List;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import java.util.Optional;
 
@@ -44,7 +47,8 @@ public class TaskController {
             } else if (!result.contains(temp)) {
                 result.add(temp);
             } else {
-                return result;}
+                return result;
+            }
         }
         return result;
     }
@@ -60,6 +64,7 @@ public class TaskController {
     @PutMapping("/{id}")
     public void updateShow(@PathVariable("id") String id, @RequestBody Task payload) {
         Optional<Task> newData = taskRespository.findById(id);
+
         if (newData.isPresent()) {
             Task result = newData.get();
             result.setTask(result.getTask());
@@ -75,14 +80,18 @@ public class TaskController {
 
     }
 
-    @PutMapping("/{id}/{key}")
-    public void updateSteps(@PathVariable("id") String id, @PathVariable String key, @RequestBody Task payload) {
+    @PutMapping("/{id}/{formatKey}")
+    public void updateSteps(@PathVariable("id") String id, @PathVariable String formatKey, @RequestBody Task payload) {
+        LocalDate date = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        String stringDate = date.format(formatter);
         Optional<Task> newData = taskRespository.findById(id);
-        if (newData.isPresent()) {
+        String key = formatKey.replace("_", " ");
+        System.out.println("new format key---------" + key);
+        if (newData.isPresent() && (!key.equals("null"))) {
             Task result = newData.get();
             result.setTask(result.getTask());
             result.setDateB(result.getDateB());
-            result.setDateE(result.getDateE());
             // not setting result.SetCompleted() yet becuase we need to compute the new
             // result
             result.setShow(result.isShow());
@@ -94,9 +103,10 @@ public class TaskController {
             result.setSteps(holder); // save the new steps(holder) on the result
             float index = 0;
             float completed = 0;
+            Help tempHolder;
             for (String name : holder.keySet()) {
                 index = index + 1;
-                Help tempHolder = holder.get(name); // tempholder holds the temporary values of holder.get(key)
+                tempHolder = holder.get(name); // tempholder holds the temporary values of holder.get(key)
                 completed = completed + tempHolder.getCompletedS();
             }
             float newCompleted = 0;
@@ -104,7 +114,28 @@ public class TaskController {
                 newCompleted = (completed / index);
             }
             result.setCompleted(newCompleted); // now we
+            if (newCompleted == 1.0) {
+                result.setDateE(stringDate);
+            }
+
             taskRespository.save(result); // save the new obj on the db
+        }
+
+        else {
+            Task result = newData.get();
+            result.setTask(result.getTask());
+            result.setDateB(result.getDateB());
+            // not setting result.SetCompleted() yet becuase we need to compute the new
+            // result
+            result.setShow(result.isShow());
+            if (result.getCompleted() == 0) {
+                result.setCompleted(1);
+                result.setDateE(stringDate);
+            } else {
+                result.setCompleted(0);
+                result.setDateE("TBD");
+            }
+
         }
     }
 }

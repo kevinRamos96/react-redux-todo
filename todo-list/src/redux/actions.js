@@ -2,6 +2,8 @@ import { ADD_TODO, SHOW, COMPLETED, ADD_TODO_SLAVE, STEP_COMPLETED, STEP_UNDO, P
 import axios from "axios"
 import { useDispatch } from "react-redux"
 
+const dateDrive = new Date()
+
 export const addTodo = (content, date) => ({
     type: ADD_TODO,
     payload: {
@@ -19,8 +21,8 @@ export const addTodo = (content, date) => ({
 
 export const postTask = (parent, content, date) => (dispatch, getState) => {
     const tasks = {
-        task: content,
         category: parent,
+        task: content,
         dateB: date,
         dateE: "1/1/1",
         completed: 0,
@@ -74,7 +76,7 @@ export const postTaskSteps = (parent, content, date, contentSteps) => (dispatch,
         task: content,
         category: parent,
         dateB: date,
-        dateE: "1/1/1",
+        dateE: "TBA",
         completed: 0,
         show: false,
         steps: contentSteps
@@ -97,7 +99,7 @@ export const addTodoSlave = (content, contentSteps, date) => ({
     payload: {
         task: content,
         dateB: date,
-        dateE: "1/1/1",
+        dateE: "TBA",
         completed: 0,
         show: false,
         steps: contentSteps
@@ -126,42 +128,94 @@ export const toogleShowAPI = (item) => (dispatch, getState) => {
         .then(res => console.log("res from PUT", res))
 }
 
-export const stepCompletedAPI = (item, itemStep, itemCompleted) => (dispatch, getState) => {
-    const state = itemCompleted;
-    console.log("itemCompleted", itemCompleted)
 
-}
 
 export const stepCompleted = (item, itemStep, itemCompleted) => (dispatch, getState) => {
+    if (itemStep !== null) {
+        let state = itemStep.step;
+        state = state.replace(/\s/g, "_")
+        console.log("STEP Completed", itemStep)
+        if (itemCompleted == 1) {
+            const taskDate = (dateDrive.getMonth() + 1) + "/" + dateDrive.getDate() + "/" + dateDrive.getFullYear()
+            console.log("taskDate", taskDate)
+            axios.put("http://192.168.22.27:8080/api/" + item.task + "/" + state, item)
+                .then(res => {
+                    console.log("response for step undo", res.status)
+                    dispatch({
+                        type: STEP_COMPLETED,
+                        payload: item,
+                        stepFinder: itemStep,
+                        newCompleted: itemCompleted,
+                        newDate: taskDate
+                    })
+                })
+        }
 
-    const state = itemStep.step;
-    console.log("STEP Completed", itemStep)
-    axios.put("http://192.168.22.27:8080/api/" + item.task + "/" + state, item)
-        .then(res => {
-            console.log("response for step undo", res.status)
-            dispatch({
-                type: STEP_COMPLETED,
-                payload: item,
-                stepFinder: itemStep,
-                newCompleted: itemCompleted
+        else {
+            axios.put("http://192.168.22.27:8080/api/" + item.task + "/" + state, item)
+                .then(res => {
+                    console.log("response for step undo", res.status)
+                    dispatch({
+                        type: STEP_COMPLETED,
+                        payload: item,
+                        stepFinder: itemStep,
+                        newCompleted: itemCompleted,
+                        newDate: "TBA"
+                    })
+                })
+        }
+
+    }
+    else {
+        const taskDate = (dateDrive.getMonth() + 1) + "/" + dateDrive.getDate() + "/" + dateDrive.getFullYear()
+        axios.put("http://192.168.22.27:8080/api/" + item.task + "/" + "null", item)
+            .then(res => {
+                console.log("response for step undo", res.status)
+                dispatch({
+                    type: STEP_COMPLETED,
+                    payload: item,
+                    stepFinder: itemStep,
+                    newCompleted: itemCompleted,
+                    newDate: taskDate
+                })
             })
-        })
+
+
+    }
+
 }
 
 export const stepUndo = (item, itemStep, itemCompleted) => (dispatch, getState) => {
-    const state = itemStep.step;
-    console.log("STEP UNDO", itemStep.step)
+    if (itemStep !== null) {
+        let state = itemStep.step;
+        state = state.replace(/\s/g, "_")
+        console.log("STEP UNDO", itemStep.step)
 
-    axios.put("http://192.168.22.27:8080/api/" + item.task + "/" + state, item)
-        .then(res => {
-            console.log("response for step undo", res.status)
-            dispatch({
-                type: STEP_UNDO,
-                payload: item,
-                stepFinder: itemStep,
-                newCompleted: itemCompleted
+        axios.put("http://192.168.22.27:8080/api/" + item.task + "/" + state, item)
+            .then(res => {
+                console.log("response for step undo", res.status)
+                dispatch({
+                    type: STEP_UNDO,
+                    payload: item,
+                    stepFinder: itemStep,
+                    newCompleted: itemCompleted,
+                    newDate: "TBA"
+                })
             })
-        })
+    }
+    else {
+        axios.put("http://192.168.22.27:8080/api/" + item.task + "/" + "null", item)
+            .then(res => {
+                console.log("response for step undo", res.status)
+                dispatch({
+                    type: STEP_UNDO,
+                    payload: item,
+                    stepFinder: itemStep,
+                    newCompleted: itemCompleted,
+                    newDate: "TBA"
+                })
+            })
+    }
 
 
 }

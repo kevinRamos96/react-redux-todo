@@ -71,8 +71,8 @@ const CreateTask = (props) => {
     }
 
     const dispatchAddTodo = () => {
-        dispatch(addTodo(task, taskDate))
-        dispatch(postTask(task, taskDate))
+        // dispatch(addTodo(task, taskDate))
+        dispatch(postTask(categoryData, task, taskDate))
         dispatch(getTask())
     }
     //Set state for task and subList to null
@@ -109,7 +109,17 @@ const CreateTask = (props) => {
         {!butState ? <>
             <div className="boxTitle">
                 <input value={task} placeholder="Input step Name" onChange={(e) => formTask(e)}></input>
-                <input value={categoryData} placeholder="Input Category Name" onChange={(e) => formCategory(e)}></input>
+                <input value={categoryData} list="catOptions" placeholder="Input Category Name" onChange={(e) => formCategory(e)}></input>
+
+                <datalist id="catOptions" >
+                    {Object.keys(testState).map(input =>
+
+                        <option>{input}</option>
+
+                    )
+                    }
+                </datalist>
+
             </div>
             <div className="buttonBox">
                 <button type='submit' onClick={() => dispatchAddTodo()}>Add Task</button>
