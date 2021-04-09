@@ -1,6 +1,6 @@
 import { Component, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { getStateFromApi, getTask, stepCompleted, stepUndo, toogleShow, toogleShowAPI, updateShowAPI } from "../redux/actions"
+import { deleteTask, deleteTaskNOAPI, getStateFromApi, getTask, stepCompleted, stepUndo, toogleShow, toogleShowAPI, updateShowAPI } from "../redux/actions"
 import TodoSubList from './todosublist'
 import "../css/progress.css"
 
@@ -37,7 +37,10 @@ const ShowListItem = (props) => {
                                 <div className="item2">{selector[input].task}
                                     <div className="button-class">
                                         {selector[input].completed === 1 ?
-                                            <button type='submit' onClick={() => (dispatch(stepUndo(selector[input], null, 0)))}  >Undo</button>
+                                            <>
+                                                <button type='submit' onClick={() => (dispatch(stepUndo(selector[input], null, 0)))}  >Undo</button>
+                                                <button type='submit' onClick={() => dispatch(deleteTask(selector[input]))}>Remove</button>
+                                            </>
                                             :
                                             <button type='submit' onClick={() => (dispatch(stepCompleted(selector[input], null, 1)))}  >Completed</button>
                                         }
@@ -59,7 +62,12 @@ const ShowListItem = (props) => {
 
                                 <div className="item2">{selector[input].task}
                                     <div className="button-class">
-                                        <button type='submit' onClick={() => (toogleUpdate(selector[input]))}  >ShowSteps</button>
+                                        <>
+                                            <button type='submit' onClick={() => (toogleUpdate(selector[input]))}  >ShowSteps</button>
+                                            {selector[input].completed === 1 &&
+                                                <button type='submit' onClick={() => dispatch(deleteTask(selector[input]))}>Remove</button>
+                                            }
+                                        </>
                                     </div>
                                 </div>
                                 <div className="item2">{selector[input].dateB}</div>

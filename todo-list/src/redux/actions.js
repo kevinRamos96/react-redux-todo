@@ -1,4 +1,4 @@
-import { ADD_TODO, SHOW, COMPLETED, ADD_TODO_SLAVE, STEP_COMPLETED, STEP_UNDO, POST_TASK, POST_TASK_SUCC, ADD_STATE, ADD_CATEGORY } from "./actionTypes"
+import { ADD_TODO, SHOW, COMPLETED, ADD_TODO_SLAVE, STEP_COMPLETED, STEP_UNDO, POST_TASK, POST_TASK_SUCC, ADD_STATE, ADD_CATEGORY, DELETE_TASK } from "./actionTypes"
 import axios from "axios"
 import { useDispatch } from "react-redux"
 
@@ -225,3 +225,19 @@ export const addCategory = (item) => ({
     type: ADD_CATEGORY,
     payload: item
 })
+
+export const deleteTask = (item) => (dispatch, getState) => {
+
+    axios.delete("http://192.168.22.27:8080/api/" + item.id, item).
+        then(res => {
+            console.log("delete status", res.status)
+            dispatch({ type: DELETE_TASK, payload: item })
+        })
+}
+
+export const deleteTaskNOAPI = (item) => (dispatch, getState) => {
+
+
+    dispatch({ type: DELETE_TASK, payload: item })
+
+}

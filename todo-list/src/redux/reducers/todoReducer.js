@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ADD_TODO, SHOW, ADD_TODO_SLAVE, STEP_COMPLETED, COMPLETED, STEP_UNDO, POST_TASK, ADD_STATE } from "../actionTypes"
+import { ADD_TODO, SHOW, ADD_TODO_SLAVE, STEP_COMPLETED, COMPLETED, STEP_UNDO, POST_TASK, ADD_STATE, DELETE_TASK } from "../actionTypes"
 
 const initialState = {
 
@@ -133,6 +133,22 @@ const reducer = (state = initialState, action) => {
                 }
 
             }
+        }
+
+        case DELETE_TASK: {
+            const { task, category } = action.payload
+            console.log("inside DELETE_TASK task received", task)
+            console.log("inside DELETE_TASK", state[category])
+            const temp = state[category]
+            const newState = Object.keys(temp).reduce((object, input) => {
+                console.log("inside reduce", temp[input].task)
+                if (temp[input].task !== task) {
+                    object[input] = temp[input]
+                }
+                return object
+            }, {})
+            console.log(newState)
+            return { ...state, [category]: newState }
         }
 
 

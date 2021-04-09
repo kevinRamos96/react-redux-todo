@@ -14,6 +14,7 @@ import com.react.server.respository.TaskRespository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -139,6 +140,16 @@ public class TaskController {
             }
             taskRespository.save(result); // save the new obj on the db
 
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteTask(@PathVariable String id) {
+        if (taskRespository.existsById(id)) {
+            taskRespository.deleteById(id);
+            System.out.println("Successful deleted ");
+        } else {
+            System.out.println("Error ");
         }
     }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid'
-import { stepCompleted, taskCompleted, stepUndo } from "../redux/actions"
+import { stepCompleted, taskCompleted, stepUndo, deleteTask } from "../redux/actions"
 import { useDispatch, useSelector } from "react-redux"
 import taskCompletion from "./taskCompletion"
 import taskUndo from "./taskUndo"
@@ -33,8 +33,9 @@ const TodoSubList = ({ propsParent, props }) => {
 
                     <div className="subitem1-container ">
                         {props[input].completedS ?
-                            <button type="submit" onClick={() => dispatch(stepUndo(propsParent, props[input], taskUndo(propsParent, props)))}>Undo</button>
-
+                            <>
+                                <button type="submit" onClick={() => dispatch(stepUndo(propsParent, props[input], taskUndo(propsParent, props)))}>Undo</button>
+                            </>
                             :
                             <button type="submit" onClick={() => dispatch(stepCompleted(propsParent, props[input], taskCompletion(propsParent, props)))}>Complete</button>
 
