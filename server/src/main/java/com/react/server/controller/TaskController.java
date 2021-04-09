@@ -41,6 +41,7 @@ public class TaskController {
         List<Task> filter = taskRespository.findCategoryName();
         for (Task list : filter) {
             String temp = list.getCategory();
+            System.out.println("List item " + temp);
             if (result.isEmpty()) {
                 result.add(temp);
 
@@ -128,13 +129,15 @@ public class TaskController {
             // not setting result.SetCompleted() yet becuase we need to compute the new
             // result
             result.setShow(result.isShow());
-            if (result.getCompleted() == 0) {
+            System.out.println("inside else of steps: " + result.getCompleted());
+            if ((int) result.getCompleted() == 0) {
                 result.setCompleted(1);
                 result.setDateE(stringDate);
             } else {
                 result.setCompleted(0);
                 result.setDateE("TBD");
             }
+            taskRespository.save(result); // save the new obj on the db
 
         }
     }

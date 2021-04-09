@@ -19,7 +19,7 @@ export const addTodo = (content, date) => ({
 
 })
 
-export const postTask = (parent, content, date) => (dispatch, getState) => {
+export const postTask = (parent, content, date) => async (dispatch, getState) => {
     const tasks = {
         category: parent,
         task: content,
@@ -33,11 +33,11 @@ export const postTask = (parent, content, date) => (dispatch, getState) => {
 
     }
     console.log("thunk to post", tasks)
-    axios.post("http://192.168.22.27:8080/api/", tasks)
+    await axios.post("http://192.168.22.27:8080/api/", tasks)
         .then(res => {
             console.log("res", tasks)
             console.log("resdata post", res.data)
-            dispatch({ type: ADD_STATE, payload: tasks })
+            dispatch(getTask())
         })
 
 }
@@ -71,7 +71,7 @@ export const updateShowAPI = (input) => (dispatch, getState) => {
     console.log("updateshow API", getState)
 }
 
-export const postTaskSteps = (parent, content, date, contentSteps) => (dispatch, getState) => {
+export const postTaskSteps = (parent, content, date, contentSteps) => async (dispatch, getState) => {
     const tasks = {
         task: content,
         category: parent,
@@ -84,12 +84,11 @@ export const postTaskSteps = (parent, content, date, contentSteps) => (dispatch,
 
     }
     console.log("thunk to post", tasks)
-    axios.post("http://192.168.22.27:8080/api/", tasks)
+    await axios.post("http://192.168.22.27:8080/api/", tasks)
         .then(res => {
             console.log("res", res)
             console.log("resdata", res.data)
-            dispatch({ type: ADD_STATE, payload: tasks })
-
+            dispatch(getTask())
         })
 
 }
@@ -113,9 +112,9 @@ export const toogleShow = item => ({
 
 export const toogleShowAPI = (item) => (dispatch, getState) => {
     const state = getState()
-    const id = item.task
+    const id = item.id
     console.log("toogleShowAPI", state)
-    console.log("toogleShowAPI", item.task)
+    console.log("toogleShowAPI", id)
     const task = Object.keys(state).reduce((object, helper) => {
         if (state[helper].task === item.task) {
             object[helper] = state[helper]
@@ -138,9 +137,9 @@ export const stepCompleted = (item, itemStep, itemCompleted) => (dispatch, getSt
         if (itemCompleted == 1) {
             const taskDate = (dateDrive.getMonth() + 1) + "/" + dateDrive.getDate() + "/" + dateDrive.getFullYear()
             console.log("taskDate", taskDate)
-            axios.put("http://192.168.22.27:8080/api/" + item.task + "/" + state, item)
+            axios.put("http://192.168.22.27:8080/api/" + item.id + "/" + state, item)
                 .then(res => {
-                    console.log("response for step undo", res.status)
+                    console.log("response for step complete", res.status)
                     dispatch({
                         type: STEP_COMPLETED,
                         payload: item,
@@ -152,9 +151,10 @@ export const stepCompleted = (item, itemStep, itemCompleted) => (dispatch, getSt
         }
 
         else {
-            axios.put("http://192.168.22.27:8080/api/" + item.task + "/" + state, item)
+            console.log("STEP Completed", itemCompleted)
+            axios.put("http://192.168.22.27:8080/api/" + item.id + "/" + state, item)
                 .then(res => {
-                    console.log("response for step undo", res.status)
+                    console.log("response for step complete", res.status)
                     dispatch({
                         type: STEP_COMPLETED,
                         payload: item,
@@ -167,10 +167,11 @@ export const stepCompleted = (item, itemStep, itemCompleted) => (dispatch, getSt
 
     }
     else {
+        console.log("STEP Completed", itemCompleted)
         const taskDate = (dateDrive.getMonth() + 1) + "/" + dateDrive.getDate() + "/" + dateDrive.getFullYear()
-        axios.put("http://192.168.22.27:8080/api/" + item.task + "/" + "null", item)
+        axios.put("http://192.168.22.27:8080/api/" + item.id + "/" + "null", item)
             .then(res => {
-                console.log("response for step undo", res.status)
+                console.log("response for step complete", res.status)
                 dispatch({
                     type: STEP_COMPLETED,
                     payload: item,
@@ -191,7 +192,7 @@ export const stepUndo = (item, itemStep, itemCompleted) => (dispatch, getState) 
         state = state.replace(/\s/g, "_")
         console.log("STEP UNDO", itemStep.step)
 
-        axios.put("http://192.168.22.27:8080/api/" + item.task + "/" + state, item)
+        axios.put("http://192.168.22.27:8080/api/" + item.id + "/" + state, item)
             .then(res => {
                 console.log("response for step undo", res.status)
                 dispatch({
@@ -204,7 +205,7 @@ export const stepUndo = (item, itemStep, itemCompleted) => (dispatch, getState) 
             })
     }
     else {
-        axios.put("http://192.168.22.27:8080/api/" + item.task + "/" + "null", item)
+        axios.put("http://192.168.22.27:8080/api/" + item.id + "/" + "null", item)
             .then(res => {
                 console.log("response for step undo", res.status)
                 dispatch({

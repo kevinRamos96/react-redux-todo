@@ -3,6 +3,7 @@ import React, { Component, useEffect, useState } from "react"
 import TodoList from './components/todolist'
 import GetDataFromAPI from './components/getDataAPI'
 import axios from 'axios'
+
 const App = () => {
 
   const todo =
@@ -48,6 +49,10 @@ const App = () => {
   const fetch = GetDataFromAPI() //initiate redux state
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState("")
+  const [fetcher, setFetcher] = useState(false)
+  const updater = (input) => {
+    setFetcher(input)
+  }
   useEffect(() => {
     axios.get("http://192.168.22.27:8080/api/getCategories").
       then(res => {
@@ -55,9 +60,10 @@ const App = () => {
         console.log(res.data);
         setData(res.data)
         setIsLoading(false)
+        setFetcher(false)
       })
 
-  }, [])
+  }, [fetcher])
 
   if (isLoading) {
     return (<div>LOADING</div>)

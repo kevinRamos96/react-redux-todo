@@ -20,6 +20,7 @@ import lombok.Setter;
 @Document(collection = "todolist")
 public class Task extends TaskHelp {
     @Id
+    String id;
     String task;
     String category;
     String dateB;

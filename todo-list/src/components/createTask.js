@@ -73,7 +73,7 @@ const CreateTask = (props) => {
     const dispatchAddTodo = () => {
         // dispatch(addTodo(task, taskDate))
         dispatch(postTask(categoryData, task, taskDate))
-        dispatch(getTask())
+        props.closeModal()
     }
     //Set state for task and subList to null
     const dispatchAddTodoSlave = () => {
@@ -83,6 +83,7 @@ const CreateTask = (props) => {
         setSubList("");
         setButState(false)
         setCategoryData("");
+        props.closeModal()
     }
     const butSet = () => {
         setButState(!butState)
