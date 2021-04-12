@@ -54,7 +54,7 @@ const App = () => {
     setFetcher(input)
   }
   useEffect(() => {
-    axios.get("https://guarded-ridge-09727.herokuapp.com//api/getCategories").
+    axios.get("https://guarded-ridge-09727.herokuapp.com/api/getCategories").
       then(res => {
         console.log("res.status", res.status)
         console.log(res.data);
