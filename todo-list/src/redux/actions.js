@@ -33,7 +33,7 @@ export const postTask = (parent, content, date) => async (dispatch, getState) =>
 
     }
     console.log("thunk to post", tasks)
-    await axios.post("https://todolist-mongo-react-redux-jav.herokuapp.com/api/", tasks)
+    await axios.post("https://guarded-ridge-09727.herokuapp.com//api/", tasks)
         .then(res => {
             console.log("res", tasks)
             console.log("resdata post", res.data)
@@ -60,7 +60,7 @@ const createMap = (input) => (dispatch) => {
 }
 export const getTask = () => async (dispatch, getState) => {
     console.log("insideapi getTASK")
-    await axios.get("https://todolist-mongo-react-redux-jav.herokuapp.com/api/")
+    await axios.get("https://guarded-ridge-09727.herokuapp.com//api/")
         .then(res => {
             dispatch(createMap(res.data))
 
@@ -84,7 +84,7 @@ export const postTaskSteps = (parent, content, date, contentSteps) => async (dis
 
     }
     console.log("thunk to post", tasks)
-    await axios.post("https://todolist-mongo-react-redux-jav.herokuapp.com/api/", tasks)
+    await axios.post("https://guarded-ridge-09727.herokuapp.com//api/", tasks)
         .then(res => {
             console.log("res", res)
             console.log("resdata", res.data)
@@ -123,7 +123,7 @@ export const toogleShowAPI = (item) => (dispatch, getState) => {
         return object
     }, {})
     console.log("task to PUT", task)
-    axios.put("https://todolist-mongo-react-redux-jav.herokuapp.com/api/" + id, task)
+    axios.put("https://guarded-ridge-09727.herokuapp.com//api/" + id, task)
         .then(res => console.log("res from PUT", res))
 }
 
@@ -137,7 +137,7 @@ export const stepCompleted = (item, itemStep, itemCompleted) => (dispatch, getSt
         if (itemCompleted == 1) {
             const taskDate = (dateDrive.getMonth() + 1) + "/" + dateDrive.getDate() + "/" + dateDrive.getFullYear()
             console.log("taskDate", taskDate)
-            axios.put("https://todolist-mongo-react-redux-jav.herokuapp.com/api/" + item.id + "/" + state, item)
+            axios.put("https://guarded-ridge-09727.herokuapp.com//api/" + item.id + "/" + state, item)
                 .then(res => {
                     console.log("response for step complete", res.status)
                     dispatch({
@@ -152,7 +152,7 @@ export const stepCompleted = (item, itemStep, itemCompleted) => (dispatch, getSt
 
         else {
             console.log("STEP Completed", itemCompleted)
-            axios.put("https://todolist-mongo-react-redux-jav.herokuapp.com/api/" + item.id + "/" + state, item)
+            axios.put("https://guarded-ridge-09727.herokuapp.com//api/" + item.id + "/" + state, item)
                 .then(res => {
                     console.log("response for step complete", res.status)
                     dispatch({
@@ -169,7 +169,7 @@ export const stepCompleted = (item, itemStep, itemCompleted) => (dispatch, getSt
     else {
         console.log("STEP Completed", itemCompleted)
         const taskDate = (dateDrive.getMonth() + 1) + "/" + dateDrive.getDate() + "/" + dateDrive.getFullYear()
-        axios.put("https://todolist-mongo-react-redux-jav.herokuapp.com/api/" + item.id + "/" + "null", item)
+        axios.put("https://guarded-ridge-09727.herokuapp.com//api/" + item.id + "/" + "null", item)
             .then(res => {
                 console.log("response for step complete", res.status)
                 dispatch({
@@ -192,7 +192,7 @@ export const stepUndo = (item, itemStep, itemCompleted) => (dispatch, getState) 
         state = state.replace(/\s/g, "_")
         console.log("STEP UNDO", itemStep.step)
 
-        axios.put("https://todolist-mongo-react-redux-jav.herokuapp.com/api/" + item.id + "/" + state, item)
+        axios.put("https://guarded-ridge-09727.herokuapp.com//api/" + item.id + "/" + state, item)
             .then(res => {
                 console.log("response for step undo", res.status)
                 dispatch({
@@ -205,7 +205,7 @@ export const stepUndo = (item, itemStep, itemCompleted) => (dispatch, getState) 
             })
     }
     else {
-        axios.put("https://todolist-mongo-react-redux-jav.herokuapp.com/api/" + item.id + "/" + "null", item)
+        axios.put("https://guarded-ridge-09727.herokuapp.com//api/" + item.id + "/" + "null", item)
             .then(res => {
                 console.log("response for step undo", res.status)
                 dispatch({
@@ -228,7 +228,7 @@ export const addCategory = (item) => ({
 
 export const deleteTask = (item) => (dispatch, getState) => {
 
-    axios.delete("https://todolist-mongo-react-redux-jav.herokuapp.com/api/" + item.id, item).
+    axios.delete("https://guarded-ridge-09727.herokuapp.com//api/" + item.id, item).
         then(res => {
             console.log("delete status", res.status)
             dispatch({ type: DELETE_TASK, payload: item })
