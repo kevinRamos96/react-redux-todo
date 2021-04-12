@@ -31,11 +31,13 @@ public class TaskController {
     @Autowired
     TaskRespository taskRespository;
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/")
     public List<Task> getTask() {
         return taskRespository.findAll();
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/getCategories")
     public List<String> getCategories() {
         List<String> result = new ArrayList<String>();
@@ -55,6 +57,7 @@ public class TaskController {
         return result;
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/")
     public void putTask(@RequestBody Task payload) {
         System.out.println("what is inside item? " + payload);
@@ -63,6 +66,7 @@ public class TaskController {
         // taskRespository.save(item);
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/{id}")
     public void updateShow(@PathVariable("id") String id, @RequestBody Task payload) {
         Optional<Task> newData = taskRespository.findById(id);
@@ -82,6 +86,7 @@ public class TaskController {
 
     }
 
+    @CrossOrigin(origins = "*")
     @PutMapping("/{id}/{formatKey}")
     public void updateSteps(@PathVariable("id") String id, @PathVariable String formatKey, @RequestBody Task payload) {
         LocalDate date = LocalDate.now();
@@ -143,6 +148,7 @@ public class TaskController {
         }
     }
 
+    @CrossOrigin(origins = "*")
     @DeleteMapping("/{id}")
     public void deleteTask(@PathVariable String id) {
         if (taskRespository.existsById(id)) {
