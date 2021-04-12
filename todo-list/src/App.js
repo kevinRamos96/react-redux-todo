@@ -54,7 +54,7 @@ const App = () => {
     setFetcher(input)
   }
   useEffect(() => {
-    axios.get("http://192.168.22.27:8080/api/getCategories").
+    axios.get("https://todolist-mongo-react-redux-jav.herokuapp.com/api/getCategories").
       then(res => {
         console.log("res.status", res.status)
         console.log(res.data);
