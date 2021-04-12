@@ -1,0 +1,8 @@
+com/react/server/model/Task.class
+com/react/server/model/TaskDefinition$TaskDefinitionHelper.class
+com/react/server/controller/TaskController.class
+com/react/server/model/Help.class
+com/react/server/model/TaskDefinition.class
+com/react/server/ServerApplication.class
+com/react/server/model/TaskHelp.class
+com/react/server/respository/TaskRespository.class
