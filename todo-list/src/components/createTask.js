@@ -1,6 +1,6 @@
 import { Component, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { addTodo, addTodoSlave, getTask, postTaskSteps } from "../redux/actions"
+import { getTask, postTaskSteps } from "../redux/actions"
 import { postTask } from "../redux/actions";
 import '../css/modal.css'
 
@@ -77,7 +77,6 @@ const CreateTask = (props) => {
     }
     //Set state for task and subList to null
     const dispatchAddTodoSlave = () => {
-        dispatch(addTodoSlave(categoryData, task, subList, taskDate))
         dispatch(postTaskSteps(categoryData, task, taskDate, subList))
         setTask("");
         setSubList("");

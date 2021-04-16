@@ -4,20 +4,7 @@ import { useDispatch } from "react-redux"
 
 const dateDrive = new Date()
 
-export const addTodo = (content, date) => ({
-    type: ADD_TODO,
-    payload: {
-        task: content,
-        dateB: date,
-        dateE: "1/1/1",
-        completed: 0,
-        show: false,
-        steps: {
-        },
 
-    }
-
-})
 
 export const postTask = (parent, content, date) => async (dispatch, getState) => {
     const tasks = {
@@ -67,9 +54,7 @@ export const getTask = () => async (dispatch, getState) => {
         })
 }
 
-export const updateShowAPI = (input) => (dispatch, getState) => {
-    console.log("updateshow API", getState)
-}
+
 
 export const postTaskSteps = (parent, content, date, contentSteps) => async (dispatch, getState) => {
     const tasks = {
@@ -93,17 +78,7 @@ export const postTaskSteps = (parent, content, date, contentSteps) => async (dis
 
 }
 //addTodo slave to create steps from addTodo
-export const addTodoSlave = (content, contentSteps, date) => ({
-    type: ADD_TODO_SLAVE,
-    payload: {
-        task: content,
-        dateB: date,
-        dateE: "TBA",
-        completed: 0,
-        show: false,
-        steps: contentSteps
-    }
-})
+
 
 export const toogleShow = item => ({
     type: SHOW,
@@ -233,11 +208,4 @@ export const deleteTask = (item) => (dispatch, getState) => {
             console.log("delete status", res.status)
             dispatch({ type: DELETE_TASK, payload: item })
         })
-}
-
-export const deleteTaskNOAPI = (item) => (dispatch, getState) => {
-
-
-    dispatch({ type: DELETE_TASK, payload: item })
-
 }

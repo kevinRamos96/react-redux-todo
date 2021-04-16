@@ -7,18 +7,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_TODO: {
-            const { task, date } = action.payload;
-            return {
 
-                ...state,
-                [task]: {
-                    ...action.payload,
-                    task: task,
-                    date: date
-                }
-            }
-        }
 
         case ADD_STATE: {
             const { task, category, steps, dateB, } = action.payload;

@@ -6,43 +6,7 @@ import axios from 'axios'
 
 const App = () => {
 
-  const todo =
-    [{
-      task: "firts",
-      dateB: "1/1/1",
-      dateE: "1/1/1",
-      completed: false,
-      show: false,
-      steps: [{
-        miniT: "test",
-        completed: true
-      },
-      {
-        miniT: 'test2'
-      }]
-    },
-    {
-      task: "second",
-      dateB: "1/1/1",
-      dateE: "1/1/1",
-      completed: false,
-      show: false,
-      steps: [{
-        miniT: "test",
-        completed: true
-      },
-      {
-        miniT: 'test2'
-      }]
-    },
-    {
-      task: "third",
-      dateB: "1/1/1",
-      dateE: "1/1/1",
-      completed: false,
-      show: false,
-      steps: []
-    }]
+
   //Initiate redux state if there is data saved omn DB with GETDataFromAPI() needs to only be run once at the beginning
   //of the application if it is run other than at the beginning it casuse the app to create an infinite loop of API calls
   //due to constantly re rendering
@@ -50,9 +14,7 @@ const App = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [data, setData] = useState("")
   const [fetcher, setFetcher] = useState(false)
-  const updater = (input) => {
-    setFetcher(input)
-  }
+
   useEffect(() => {
     axios.get("https://guarded-ridge-09727.herokuapp.com/api/getCategories").
       then(res => {
@@ -66,7 +28,7 @@ const App = () => {
   }, [fetcher])
 
   if (isLoading) {
-    return (<div>LOADING</div>)
+    return (<div className="loader"></div>)
   }
 
   return (<TodoList
